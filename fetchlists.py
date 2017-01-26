@@ -10,7 +10,6 @@ urllib.request.urlretrieve('https://s3.amazonaws.com/lists.disconnect.me/simple_
 config_file=open('config_file.conf','w')
 prefix='address=/'
 suffix='/'+sys.argv[1]+'\n'
-#suffix='/192.168.1.4\n'
 
 def writeConfigToFile(line):
 	line=prefix+line+suffix
@@ -18,7 +17,6 @@ def writeConfigToFile(line):
 	return;
 
 def removeIP(count,line):
-	line=line.rstrip();
 	line= line[count:]
 	return line;
 
@@ -27,21 +25,17 @@ with open('stevenBlack.txt') as f:
 		if line.find('#')!=-1 or line == '\n' or line.find('localhost')!= -1 or line.find('127.0.0.1')!=-1 or line.find('255.255.255.255')!=-1:
 			continue;
 		else :
+			line=line.rstrip();
 			new_line=removeIP(8,line)
 			writeConfigToFile(new_line)
 
-with open('cameleon.txt') as f:
-	for line in f:
-		if line.find('#')!=-1 or line.find('localhost')!= -1 :
-			continue;
-		new_line=removeIP(11,line)
-		writeConfigToFile(new_line)
-
-files=['zeus.txt','disconnect.txt','justdomains.txt']
+files=['zeus.txt','disconnect.txt','justdomains.txt','cameleon.txt']
 for i in files:
 	with open(i) as f:
 		for line in f:
 			if line.find('#')!=-1 or line == '\n' or line.find('localhost')!= -1:
 				continue;
 			line=line.rstrip()
+			if i == 'cameleon.txt':
+				line=removeIP(11,line)
 			writeConfigToFile(line)
