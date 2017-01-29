@@ -5,3 +5,7 @@ python3 fetchlists.py $ip
 rm -rf *.txt
 sort config_file.conf | uniq >/etc/dnsmasq.conf 
 rm -rf config_file.conf
+sudo mv adblock.conf /etc/dnsmasq.d/
+sudo mv /etc/lighthttpd.conf /etc/lighthttpd.conf.orig
+sudo cp lighthttpd.conf /etc/lighthttpd.conf
+sudo cp index.php /var/www/html/index.php
